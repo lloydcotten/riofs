@@ -68,6 +68,11 @@ riofs [options] [bucketname] [mountpoint]
 
 * Send a TERM signal to unmount filesystem and terminate running RioFS instance (example: ```killall riofs```)
 
+* To use with IAM roles:
+    - acquire the credentials from http://169.254.169.254/latest/meta-data/iam/security-credentials/[ROLENAME] 
+    - in addition to the AWS_ACCESS_KEY_ID, AWS_SECRET_KEY environment variables, also assign the token to AWS_SESSION_TOKEN
+    - alternatively use the session_token element in the xml configuration file
+
 ### Known limitations
 
 * Appending data to an existing file is not supported.
