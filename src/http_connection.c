@@ -670,6 +670,7 @@ gboolean http_connection_make_request (HttpConnection *con,
     gpointer ctx)
 {
     gchar *auth_str;
+    gchar *session_token;
     struct evhttp_request *req;
     gchar auth_key[300];
     time_t t;
@@ -689,6 +690,11 @@ gboolean http_connection_make_request (HttpConnection *con,
                 responce_cb (con, ctx, FALSE, NULL, 0, NULL);
             return FALSE;
         }
+
+    session_token = conf_get_string (application_get_conf (con->app), "s3.session_token");
+    if (session_token) {
+        http_connection_add_output_header (con, "x-amz-security-token", session_token);
+    }
 
     // if this is the first request
     if (!parent_request_data) {

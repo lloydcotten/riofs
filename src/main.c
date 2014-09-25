@@ -284,7 +284,7 @@ static void sigusr1_cb (G_GNUC_UNUSED evutil_socket_t sig, G_GNUC_UNUSED short e
         LOG_err (APP_LOG, "Failed to parse configuration file: %s", _app->conf_path);
         conf_destroy(conf_new);
     } else {
-        const gchar *copy_entries[] = {"s3.host", "s3.port", "s3.versioning", "s3.access_key_id", "s3.secret_access_key", "s3.bucket_name", NULL};
+        const gchar *copy_entries[] = {"s3.host", "s3.port", "s3.versioning", "s3.access_key_id", "s3.secret_access_key", "s3.session_token", "s3.bucket_name", NULL};
         int i;
 
         _app->conf = conf_new;
@@ -849,6 +849,9 @@ int main (int argc, char *argv[])
             application_destroy (app);
             return -1;
         }
+    }
+    if (getenv("AWS_SESSION_TOKEN")) {
+        conf_set_string (app->conf, "s3.security_token", getenv ("AWS_SESSION_TOKEN"));
     }
 
     // check if both strings are set
