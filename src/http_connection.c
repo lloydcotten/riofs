@@ -691,7 +691,7 @@ gboolean http_connection_make_request (HttpConnection *con,
             return FALSE;
         }
 
-    if (conf_node_exists (application_get_conf (con->ap), "s3.session_token")) {
+    if (conf_node_exists (application_get_conf (con->app), "s3.session_token")) {
         session_token = conf_get_string (application_get_conf (con->app), "s3.session_token");
         http_connection_add_output_header (con, "x-amz-security-token", session_token);
     }
