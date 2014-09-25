@@ -851,7 +851,7 @@ int main (int argc, char *argv[])
         }
     }
     if (getenv("AWS_SESSION_TOKEN")) {
-        conf_set_string (app->conf, "s3.security_token", getenv ("AWS_SESSION_TOKEN"));
+        conf_set_string (app->conf, "s3.session_token", getenv ("AWS_SESSION_TOKEN"));
     }
 
     // check if both strings are set
